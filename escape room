@@ -1,0 +1,379 @@
+
+import random
+import time
+#again var
+again = True
+#entry var
+entry = 1
+#code key var
+code = random.randint(100000,999999)
+code = str(code)
+#esape code var
+escapecode = random.randint(100000,999999)
+escapecode = str(escapecode)
+
+#ending the game var
+end = False
+#endurance and timer var
+endurance = 50
+timer = 18000
+#code var
+code1 = code[0]
+code2 = code[1]
+code3 = code[2]
+code4 = code[3]
+code5 = code[4]
+code6 = code[5]
+#backpack var
+backpack = []
+codesheetbackpack = []
+codedescramblerbackpack = []
+ladderbackpack = []
+keybackpack = []
+escapecodebackpack = []
+lastpiecebackpack = []
+#time var
+hour = [600,600,600,600,1200,1200]
+randomhour = random.choice(hour)
+#losing endurance var
+chance = [1,2,2,2,3,3,3,3]
+randomchance = random.choice(chance)
+#food var
+food = ["ladder","burger","burger","fruit","fruit","fruit","water","water","water","water","nothing","nothing","nothing","nothing","nothing"]
+randomfood = random.choice(food)
+#time var
+item = ["code sheet 1","code sheet 2","code sheet 3","code sheet 4","code sheet 5","code sheet 6","code descrambler","endurance boost","key","last piece","bottle","bottle","bottle","bottle","bottle"]
+#add endurance boost
+randomitem = random.choice(item)
+#lives var
+lives = 3
+while 0 < timer != 0 and 0 < endurance != 0 and end != True:
+    timer -= 1
+    time.sleep(1)
+    print("<1> Search for objects")
+    print("<2> Search for clues")
+    print("<3> Check clock")
+    print("<4> Backpack")
+    print("<5> Guess code")
+    userinput = int(input("What are going to do: "))
+    if userinput == 1:
+        if randomchance == 1:
+            print("You found a random ladder in the attic")
+            print("You leave the ladder in the first floor for later use")
+            ladderbackpack.append("ladder in first floor")
+            food.remove("ladder")
+            chance.remove(1)
+            randomchance = random.choice(chance)
+        elif randomchance == 2:
+            if randomhour == 600:
+                print("You searched around for 10 minutes and found nothing. You lost 5 endurance points")
+                endurance -= 5
+                print("You have",endurance,"endurance points left")
+            elif randomhour == 1200:
+                print("You searched around for 20 minutes and found nothing. You lost 10 endurance points")
+                endurance -= 10
+                print("You have",endurance,"endurance points left")
+            timer -= randomhour
+            randomhour = random.choice(hour)
+            print(timer,"time left")
+            randomchance = random.choice(chance)
+        elif randomchance == 3:
+            if randomfood == "water":
+                print("You found water! You gained 1 endurance points")
+                endurance += 1
+                print("You have",endurance,"endurance points left")
+            elif randomfood == "burger":
+                print("You have found a burger! You gained 5 endurance points")
+                endurance += 10
+                print("You have",endurance,"endurance points left")
+            elif randomfood == "nothing":
+                if randomhour == 600:
+                    print("You searched around for food for 10 minutes and found nothing. You lost 5 endurance points")
+                    endurance -= 5
+                    print("You have",endurance,"endurance points left")
+                elif randomhour == 1200:
+                    print("You searched around for food for 20 minutes and found nothing. You lost 10 endurance points")
+                    endurance -= 10
+                    print("You have",endurance,"endurance points left")     
+            elif randomfood == "fruit":
+                print("You found some fruit! You gained 3 endurance points")
+                endurance += 3
+                print("You have",endurance,"endurance points left")
+            randomchance = random.choice(chance)
+    elif userinput == 2:
+        if len(item) == 0:
+            print("You have found all the items")
+        elif randomitem == "code descrambler":
+            if "ladder in first floor" in ladderbackpack:
+                print("Using the ladder from the attic, you get the item that was on top of the shelf")
+                print("You lost 10 endurance points")
+                endurance -= 10
+                print("You have",endurance,"endurance points left")
+                print("You have found a code descrambler")
+                if "code key 1" in keybackpack:
+                    print("You use code key 1 to open the code descrambler")
+                    print("You see that there are 6 images")
+                    print("")
+                    print("< >    ( )    [ ]    { }    | |    " "")
+                    print("")
+                    print("You put the item in your BACKPACK")
+                    codedescrambler = ("< >    ( )    [ ]    { }    | |    I I")
+                    codedescramblerbackpack.append(codedescrambler)       
+                    item.remove("code descrambler")
+                else:
+                    print("You look and see that there is a lock on the code descrambler")
+                    print("Maybe you need a key to open it")
+                    print("You put the item in your BACKPACK")
+                    lockedcodedescrambler = "Seems like you need a key to open it"
+                    codedescramblerbackpack.append(lockedcodedescrambler)
+                    item.remove("code descrambler")
+            else:
+                print("You see a tool that could be useful on escaping but it seems too high")
+
+
+        elif randomitem == "code sheet 1":
+            print("You spent",randomhour,"time and found a code sheet")
+            timer -= randomhour
+            randomhour = random.choice(hour)
+            print("You look at the sheet and see a code")
+            print("You lost 3 endurance points")
+            endurance -= 3
+            print("You have",endurance,"endurance points left")
+            print("<"+code[0]+">")
+            print("You put the sheet in your BACKPACK")
+            codesheet1 = ("<"+code[0]+">")
+            codesheetbackpack.append(codesheet1)
+            item.remove("code sheet 1")
+
+
+        elif randomitem == "code sheet 2":
+            print("You spent",randomhour,"time and found a code sheet")
+            timer -= randomhour
+            randomhour = random.choice(hour)
+            print("You found a code sheet")
+            print("You look at the sheet and see a code")
+            print("You lost 3 endurance points")
+            endurance -= 3
+            print("You have",endurance,"endurance points left")
+            print("("+code[1]+")")
+            print("You put the sheet in your BACKPACK")
+            codesheet2 = ("("+code[1]+")")
+            codesheetbackpack.append(codesheet2)
+            item.remove("code sheet 2")
+        
+        elif randomitem == "code sheet 3":
+            print("You spent",randomhour,"time and found a code sheet")
+            timer -= randomhour
+            randomhour = random.choice(hour)
+            print("You found a code sheet")
+            print("You look at the sheet and see a code")
+            print("You lost 3 endurance points")
+            endurance -= 3
+            print("You have",endurance,"endurance points left")
+            print("["+code[2]+"]")
+            print("You put the sheet in your BACKPACK")
+            codesheet3 = ("["+code[2]+"]")
+            codesheetbackpack.append(codesheet3)
+            item.remove("code sheet 3")
+
+        elif randomitem == "code sheet 4":
+            print("You spent",randomhour,"time and found a code sheet")
+            timer -= randomhour
+            randomhour = random.choice(hour)
+            print("You found a code sheet")
+            print("You look at the sheet and see a code")
+            print("You lost 3 endurance points")
+            endurance -= 3
+            print("You have",endurance,"endurance points left")
+            print("{"+code[3]+"}")
+            print("You put the sheet in your BACKPACK")
+            codesheet4 = ("{"+code[3]+"}")
+            codesheetbackpack.append(codesheet4)
+            item.remove("code sheet 4")
+
+        elif randomitem == "code sheet 5":
+            print("You spent",randomhour,"time and found a code sheet")
+            timer -= randomhour
+            randomhour = random.choice(hour)
+            print("You found a code sheet")
+            print("You look at the sheet and see a code")
+            print("You lost 3 endurance points")
+            endurance -= 3
+            print("You have",endurance,"endurance points left")
+            print("|"+code[4]+"|")
+            print("You put the sheet in your BACKPACK")
+            codesheet5= ("|"+code[4]+"|")
+            codesheetbackpack.append(codesheet5)
+            item.remove("code sheet 5")
+
+        elif randomitem == "code sheet 6":
+            print("You spent",randomhour,"time and found a code sheet")
+            timer -= randomhour
+            randomhour = random.choice(hour)
+            print("You found a code sheet")
+            print("You look at the sheet and see a code")
+            print("You lost 3 endurance points")
+            endurance -= 3
+            print("You have",endurance,"endurance points left")
+            print("I"+code[5]+"I")
+            print("You put the sheet in your BACKPACK")
+            codesheet6= ("I"+code[5]+"I")
+            codesheetbackpack.append(codesheet6)
+            item.remove("code sheet 6")
+
+        elif randomitem == "endurance boost":
+            print("You spent",randomhour,"time and found a endurance boost")
+            timer -= randomhour
+            randomhour = random.choice(hour)
+            print("You finish the endurance boost and gain 50 endurance points")
+            endurance += 50
+            print("You have",endurance,"endurance points left")
+            item.remove("endurance boost")
+        elif randomitem == "key":
+            print("You found a key!")
+            if "code descrambler" in backpack:
+                print("You open the code descrambler using the key!")
+                print("You see that there are 6 images")
+                print("")
+                print("< >    ( )    [ ]    { }    | |    " "")
+                print("")
+                print("You put the item in your BACKPACK")
+                codedescrambler = ("< >    ( )    [ ]    { }    | |    I I")
+                codedescramblerbackpack.append(codedescrambler)  
+                if lockedcodedescrambler in codedescramblerbackpack:
+                    codedescramblerbackpack.remove(lockedcodedescrambler)
+            print("Maybe there is a box that could be opened by this key")
+            print("You put the key in your BACKPACK")
+            keybackpack.append("code key 1")
+            item.remove("key")
+
+        elif randomitem == "last piece":
+            print("You spent",randomhour,"time and found a sheet of paper that has only 1 number on it")
+            timer -= randomhour
+            print("You lost 5 endurance points")
+            endurance -= 5
+            print("You have",endurance,"endurance")
+            print("The paper has the number",escapecode[5])
+            print("You put the piece of paper in your BACKPACK")
+            randomhour = random.choice(hour)
+            lastpiece = escapecode[5]
+            lastpiecebackpack.append(lastpiece)
+            item.remove("last piece")
+        
+        elif randomitem == "bottle":
+            print("you spent",randomhour,"and found a bottle")
+            timer -= randomhour
+            print("You find that there is no worth to the bottle")
+            print("You lost 10 endurance points")
+            endurance -= 10
+            print("You have",endurance,"endurance points left")
+            item.remove("bottle")
+            randomhour = random.choice(hour)
+
+
+        if len(item) > 0:
+            randomitem = random.choice(item)
+
+        
+
+
+    elif userinput == 3:
+        print("You have",timer,"time left")
+    elif userinput == 4:
+        print("You open your backpack . . . ")
+        print("Code sheets:",codesheetbackpack)
+        print("Code descrambler:",codedescramblerbackpack)
+        print("Ladder:",ladderbackpack)
+        print("Keys:",keybackpack)
+        print("Piece of paper in the last room",escapecodebackpack)
+        print("Sheet of paper with 1 number",lastpiecebackpack)
+
+    elif userinput == 5:
+        if entry == 1:
+            userinput = input("The door has a number lock on it. Enter the code: ")
+            if userinput == code:
+                print("You have entered the room and see that there is another number lock. You have a feeling that this is the last code")
+                print("You found a sheet of paper laying on the floor that has the numbers:")
+                print("")
+                print(escapecode[0],escapecode[1],escapecode[2],escapecode[3],escapecode[4])
+                print("")
+                print("You see that you are missing the last number of the code")
+                escapecodehint = (escapecode[0],escapecode[1],escapecode[2],escapecode[3],escapecode[4])
+                print("You put the sheet in your BACKPACK")
+                escapecodebackpack.append(escapecodehint)
+                entry = 0
+                userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+                while userinput != 1 and userinput != 2:
+                    print("Invalid input!")
+                    userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+                while again == True and userinput == 1 or userinput == 2:
+                    if userinput == 1:
+                        print("You leave the room noting where it is located")
+                        again = False
+                    elif userinput == 2:
+                        userinput = input("Enter the code: ")
+                        if userinput == escapecode:
+                            end = True
+                        else:
+                            if lives != 0:
+                                lives -= 1
+                                print("Incorrect code! Lost 1 life. You have",lives,"lives left")
+                                userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+
+                            if lives == 0:
+                                print("You ran out of lives")
+                                end = True
+            else:
+                print("Incorrect code")
+
+        elif entry == 0:
+            print("You enter the room again")
+            userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+            while userinput != 1 and userinput != 2:
+                print("Invalid input")
+                userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+            while again == False and userinput == 1 or userinput == 2:
+                if userinput == 1:
+                    print("You leave the room noting where it is located")
+                    again = True
+                elif userinput == 2:
+                    userinput = input("Enter the code: ")
+                    if userinput == escapecode:
+                        end = True
+                    else:
+                        if lives != 0:
+                            lives -= 1
+                            print("Incorrect code! Lost 1 life. You have",lives,"lives left")
+                            userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+                        if lives == 0:
+                            print("You ran out of lives")
+                            end = True
+    else:
+        print("What do you mean? Did you read it correctly?")
+if endurance <= 0:
+    print("You ran out of endurance")
+    print("You get escorted out of the escape room")
+    print("You see the escape room fade away as your parents drive you back home")
+    print(". . .")
+    time.sleep(3)
+    print("Thank you for playing")
+elif timer <= 0:
+    print("You ran out of time")
+    print("You get escorted out of the escape room")
+    print("You see the escape room fade away as your parents drive you back home")
+    print(". . .")
+    time.sleep(3)
+    print("Thank you for playing")
+elif lives == 0:
+    print("You get escorted out of the escape room")
+    print("You see the escape room fade away as your parents drive you back home")
+    print(". . .")
+    time.sleep(3)
+    print("Thank you for playing")
+else:
+    print("You got the correct code!")
+    print("You get escorted out of the escape room as a winner")
+    print("You see the escape room fade away as your parents drive you back home")
+    print(". . .")
+    time.sleep(3)
+    print("Thank you for playing")
