@@ -1,4 +1,3 @@
-#move key and stamina boost to food not in item
 import random
 import time
 #again var
@@ -11,7 +10,6 @@ code = str(code)
 #esape code var
 escapecode = random.randint(100000,999999)
 escapecode = str(escapecode)
-
 #ending the game var
 end = False
 #stamina and timer var
@@ -25,8 +23,7 @@ ladderbackpack = []
 keybackpack = []
 escapecodebackpack = []
 #time var
-hour = [600,600,600,600,1200,1200]
-randomhour = random.choice(hour)
+randomhour = 1200
 #losing stamina var
 chance = [1,2,2,3,3]
 randomchance = random.choice(chance)
@@ -34,7 +31,7 @@ randomchance = random.choice(chance)
 food = ["burger","burger","fruit","fruit","fruit","water","water","water","water","nothing","nothing","nothing","nothing","nothing","stamina boost"]
 randomfood = random.choice(food)
 #time var
-item = ["code sheet 1","code sheet 2","code sheet 3","code sheet 4","code sheet 5","code sheet 6","code descrambler","bottle1","bottle2","bottle3","bottle4","bottle5","bottle6","ladder","key"]
+item = ["code sheet 1","code sheet 2","code sheet 3","code sheet 4","code sheet 5","code sheet 6","code descrambler","ladder","key"]
 #add stamina boost
 randomitem = random.choice(item)
 #lives var
@@ -44,13 +41,15 @@ lockedcodedescrambler = "Seems like you need a key to open it"
 colour = ["red","blue","green","yellow","purple","white"]
 randomcolour = random.shuffle(colour)
 colourbackpack = []
-
-
-print("You and your friends planned to go to an escape room")
-print("But when you arrive to the escape room, none of your friends are to be seen")
-print("You are the only one who goes into the escape room")
-print("You watch as the door closes and gets locked in front of you")
-print("You look behind you and see a sheet of paper")
+#bottles var
+bottles = ["bottle1","bottle2","bottle3","bottle4","bottle5","bottle6"]
+#information
+# print("You and your friends planned to go to an escape room")
+# print("But when you arrive to the escape room, none of your friends are to be seen")
+# print("You are the only one who goes into the escape room")
+# print("You watch as the door closes and gets locked in front of you")
+# print("You look behind you and see a sheet of paper")
+# time.sleep(3)
 # print("\nWelcome to the escape room\n")
 # print("You hear an announcer through speakers:")
 # print("You have 5 hours before you lose because of time")
@@ -64,61 +63,49 @@ print("You look behind you and see a sheet of paper")
 # print("When you guess the final code watch out! You only have 3 tries before you lose")
 # time.sleep(2)
 # print("Hope you have an enjoyable time and Good Luck!")
-
-#while loop to see if they can still play or they lose
+#options
 print("\nOptions")
-print("<1> Search for objects")
+print("<1> Search for food")
 print("<2> Search for clues")
 print("<3> Check clock")
 print("<4> Backpack")
 print("<5> Rest")
 print("<6> Guess code")
-
-
+#while loop to see if they can still play or they lose
 while 0 < timer != 0 and 0 < stamina != 0 and end != True:
     print("")
+    #userinput
     userinput = input("What are you going to do (<0> to see options): ")
     print("")
-    if userinput == "0":
+    if userinput == "die":
+        print("You died")
+        end = True
+    elif userinput == "0":
+        #options
         print("Options")
-        print("<1> Search for objects")
+        print("<1> Search for food")
         print("<2> Search for clues")
         print("<3> Check clock")
         print("<4> Backpack")
         print("<5> Rest")
         print("<6> Guess code")
-    #if they say 1
-
     elif userinput == "1":
-        #see what was randomly chosen
         if randomchance == 1:
             #gain stamina
-            print("You spent",randomhour,"time and found a stamina boost")
+            print("You spent 20 minutes and found a stamina boost")
             timer -= randomhour
-            randomhour = random.choice(hour)
             print("You finish the stamina boost and gain 10 stamina points")
             stamina += 10
             print("You have",stamina,"stamina points left")
             randomchance = random.choice(chance)
-
         elif randomchance == 2:
-            #lose time
-            if randomhour == 600:
-                print("You searched around for 10 minutes and found nothing. You lost 2 stamina points")
-                stamina -= 2
-                print("You have",stamina,"stamina points left")
-                timer -= randomhour
-                randomhour = random.choice(hour)
-                print(timer,"time left")
-                randomchance = random.choice(chance)                
-            elif randomhour == 1200:
-                print("You searched around for 20 minutes and found nothing. You lost 4 stamina points")
-                stamina -= 4
-                print("You have",stamina,"stamina points left")
-                timer -= randomhour
-                randomhour = random.choice(hour)
-                print(timer,"time left")
-                randomchance = random.choice(chance)
+            #lose time and stamina
+            print("You searched around for 20 minutes and found nothing. You lost 2 stamina points")
+            stamina -= 2
+            print("You have",stamina,"stamina points left")
+            timer -= randomhour
+            print(timer,"time left")
+            randomchance = random.choice(chance)                
         elif randomchance == 3:
             #gain stamina and lose time
             if randomfood == "water":
@@ -130,14 +117,9 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
                 stamina += 10
                 print("You have",stamina,"stamina points left")
             elif randomfood == "nothing":
-                if randomhour == 600:
-                    print("You searched around for food for 10 minutes and found nothing. You lost 5 stamina points")
-                    stamina -= 5
-                    print("You have",stamina,"stamina points left")
-                elif randomhour == 1200:
-                    print("You searched around for food for 20 minutes and found nothing. You lost 10 stamina points")
-                    stamina -= 10
-                    print("You have",stamina,"stamina points left")     
+                print("You searched around for food for 20 minutes and found nothing. You lost 5 stamina points")
+                stamina -= 5
+                print("You have",stamina,"stamina points left")     
             elif randomfood == "fruit":
                 print("You found some fruit! You gained 3 stamina points")
                 stamina += 3
@@ -147,14 +129,15 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
         #see if they have all the items
         if len(item) == 0:
             print("You have found all the items")
-        #find what was randomly chosen
         elif randomitem == "code descrambler":
+            #if they found the ladder then they get the box
             if "ladder in first floor" in ladderbackpack:
                 print("Using the ladder from the attic, you get the item that was on top of the shelf")
                 print("You lost 10 stamina points")
                 stamina -= 10
                 print("You have",stamina,"stamina points left")
                 print("You have found a code descrambler")
+                #if they have the key then they open it
                 if "code key 1" in keybackpack:
                     print("You use code key 1 to open the code descrambler")
                     print("You see that there are 6 images")
@@ -165,6 +148,7 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
                     codedescrambler = ("< >    ( )    [ ]    { }    | |    I I")
                     codedescramblerbackpack.append(codedescrambler)       
                     item.remove("code descrambler")
+                #if they dont have the key then they just save the box
                 else:
                     print("You look and see that there is a lock on the code descrambler")
                     print("Maybe you need a key to open it")
@@ -174,9 +158,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
                     item.remove("code descrambler")
             else:
                 print("You see a tool that could be useful on escaping but it seems too high")
-
+        #key
         elif randomitem == "key":
             print("You found a key!")
+            #if they have the box then open it
             if lockedcodedescrambler in codedescramblerbackpack:
                 print("You open the code descrambler using the key!")
                 print("You see that there are 6 images")
@@ -187,21 +172,23 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
                 item.remove("key")
                 if lockedcodedescrambler in codedescramblerbackpack:
                     codedescramblerbackpack.remove(lockedcodedescrambler)
+            #if they dont have the box then they save the key
             else:
                 print("Maybe there is a box that could be opened by this key")
                 print("You put the key in your BACKPACK")
                 keybackpack.append("code key 1")
                 item.remove("key")
                 randomchance = random.choice(chance)
+        #ladder
         elif randomitem == "ladder":
             print("You found a random ladder in the attic")
             print("You leave the ladder in the first floor for later use")
             ladderbackpack.append("ladder in first floor")
             item.remove("ladder")
+        #code 1
         elif randomitem == "code sheet 1":
-            print("You spent",randomhour,"time and found a code sheet")
+            print("You spent 20 minutes and found a code sheet")
             timer -= randomhour
-            randomhour = random.choice(hour)
             print("You look at the sheet and see a code")
             print("You lost 3 stamina points")
             stamina -= 3
@@ -211,12 +198,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             codesheet1 = ("<"+code[0]+">")
             codesheetbackpack.append(codesheet1)
             item.remove("code sheet 1")
-
-
+        #code 2
         elif randomitem == "code sheet 2":
-            print("You spent",randomhour,"time and found a code sheet")
+            print("You spent 20 minutes and found a code sheet")
             timer -= randomhour
-            randomhour = random.choice(hour)
             print("You found a code sheet")
             print("You look at the sheet and see a code")
             print("You lost 3 stamina points")
@@ -227,11 +212,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             codesheet2 = ("("+code[1]+")")
             codesheetbackpack.append(codesheet2)
             item.remove("code sheet 2")
-        
+        #code 3
         elif randomitem == "code sheet 3":
-            print("You spent",randomhour,"time and found a code sheet")
+            print("You spent 20 minutes and found a code sheet")
             timer -= randomhour
-            randomhour = random.choice(hour)
             print("You found a code sheet")
             print("You look at the sheet and see a code")
             print("You lost 3 stamina points")
@@ -242,11 +226,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             codesheet3 = ("["+code[2]+"]")
             codesheetbackpack.append(codesheet3)
             item.remove("code sheet 3")
-
+        #code 4
         elif randomitem == "code sheet 4":
-            print("You spent",randomhour,"time and found a code sheet")
+            print("You spent 20 minutes and found a code sheet")
             timer -= randomhour
-            randomhour = random.choice(hour)
             print("You found a code sheet")
             print("You look at the sheet and see a code")
             print("You lost 3 stamina points")
@@ -257,11 +240,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             codesheet4 = ("{"+code[3]+"}")
             codesheetbackpack.append(codesheet4)
             item.remove("code sheet 4")
-
+        #code 5
         elif randomitem == "code sheet 5":
-            print("You spent",randomhour,"time and found a code sheet")
+            print("You spent 20 minutes and found a code sheet")
             timer -= randomhour
-            randomhour = random.choice(hour)
             print("You found a code sheet")
             print("You look at the sheet and see a code")
             print("You lost 3 stamina points")
@@ -272,11 +254,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             codesheet5= ("|"+code[4]+"|")
             codesheetbackpack.append(codesheet5)
             item.remove("code sheet 5")
-
+        #code 6
         elif randomitem == "code sheet 6":
-            print("You spent",randomhour,"time and found a code sheet")
+            print("You spent 20 minutes and found a code sheet")
             timer -= randomhour
-            randomhour = random.choice(hour)
             print("You found a code sheet")
             print("You look at the sheet and see a code")
             print("You lost 3 stamina points")
@@ -287,12 +268,11 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             codesheet6= ("I"+code[5]+"I")
             codesheetbackpack.append(codesheet6)
             item.remove("code sheet 6")
-
-        
+        #only if the user gets into the last room, they can get find bottles
+        #escape code 1
         elif randomitem == "bottle1":
-            print("You spent",randomhour,"and 5 stamina points to find a bottle")
+            print("You spent 20 minutes and 5 stamina points to find a bottle")
             timer -= randomhour
-            randomhour = random.choice(hour)
             stamina -= 5
             print("You have",stamina,"stamina points left")
             print("You found a",colour[0],"bottle")
@@ -302,11 +282,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             bottle1 = escapecode[0],colour[0]
             colourbackpack.append(bottle1)
             item.remove("bottle1")
-
+        #escape code 2
         elif randomitem == "bottle2":
-            print("You spent",randomhour,"and 5 stamina points to find a bottle")
+            print("You spent 20 minutes and 5 stamina points to find a bottle")
             timer -= randomhour
-            randomhour = random.choice(hour)
             stamina -= 5
             print("You have",stamina,"stamina points left")
             print("You found a",colour[1],"bottle")
@@ -316,11 +295,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             bottle2 = escapecode[1],colour[1]
             colourbackpack.append(bottle2)
             item.remove("bottle2")
-        
+        #escape code 3
         elif randomitem == "bottle3":
-            print("You spent",randomhour,"and 5 stamina points to find a bottle")
+            print("You spent 20 minutes and 5 stamina points to find a bottle")
             timer -= randomhour
-            randomhour = random.choice(hour)
             stamina -= 5
             print("You have",stamina,"stamina points left")
             print("You found a",colour[2],"bottle")
@@ -330,11 +308,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             bottle3 = escapecode[2],colour[2]
             colourbackpack.append(bottle3)
             item.remove("bottle3")
-
+        #escape code 4
         elif randomitem == "bottle4":
-            print("You spent",randomhour,"and 5 stamina points to find a bottle")
+            print("You spent 20 minutes and 5 stamina points to find a bottle")
             timer -= randomhour
-            randomhour = random.choice(hour)
             stamina -= 5
             print("You have",stamina,"stamina points left")
             print("You found a",colour[3],"bottle")
@@ -344,11 +321,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             bottle4 = escapecode[3],colour[3]
             colourbackpack.append(bottle4)
             item.remove("bottle4")
-
+        #escape code 5
         elif randomitem == "bottle5":
-            print("You spent",randomhour,"and 5 stamina points to find a bottle")
+            print("You spent 20 minutes and 5 stamina points to find a bottle")
             timer -= randomhour
-            randomhour = random.choice(hour)
             stamina -= 5
             print("You have",stamina,"stamina points left")
             print("You found a",colour[4],"bottle")
@@ -358,11 +334,10 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             bottle5 = escapecode[4],colour[4]
             colourbackpack.append(bottle5)
             item.remove("bottle5")
-    
+        #escape code 6
         elif randomitem == "bottle6":
-            print("You spent",randomhour,"and 5 stamina points to find a bottle")
+            print("You spent 20 minutes and 5 stamina points to find a bottle")
             timer -= randomhour
-            randomhour = random.choice(hour)
             stamina -= 5
             print("You have",stamina,"stamina points left")
             print("You found a",colour[5],"bottle")
@@ -372,16 +347,14 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
             bottle6 = escapecode[5],colour[5]
             colourbackpack.append(bottle6)
             item.remove("bottle6")
-
+        #if there are still items then choose a random item
         if len(item) > 0:
             randomitem = random.choice(item)
-
-        
-
-
     elif userinput == "3":
+        #show timer
         print("You have",timer,"time left")
     elif userinput == "4":
+        #show backpack
         print("You open your backpack . . . \n")
         print("Code sheets:",codesheetbackpack,"\n")
         print("Code descrambler:",codedescramblerbackpack,"\n")
@@ -389,103 +362,134 @@ while 0 < timer != 0 and 0 < stamina != 0 and end != True:
         print("Keys:",keybackpack,"\n")
         print("Piece of paper in the last room",escapecodebackpack,"\n")
         print("Bottles:",colourbackpack)
-
     elif userinput == "5":
+        #resting for stamina but lose time
         print("You spent 1 hour to rest")
         timer -= 3600
         print("You gained 3 stamina")
         stamina += 3
         print("You have",stamina,"stamina points")
         print("You have",timer,"time left")
-        
-
-
-
     elif userinput == "6":
         if entry == 1:
+            #userinput
             userinput = input("The door has a number lock on it. Enter the code: ")
+            #if they get the code
             if userinput == code:
                 print("You have entered the room and see that there is another number lock. You have a feeling that this is the last code")
                 print("You find a sheet of paper on the floor")
+                #hint
                 print("\n",colour[0],colour[1],colour[2],colour[3],colour[4],colour[5],"\n")
                 print("You put the sheet in your BACKPACK")
+                print("You find another sheet of paper")
+                print("\nThere are more items you can find even if they seem useless\n")
                 colourcode = colour[0],colour[1],colour[2],colour[3],colour[4],colour[5]
                 escapecodebackpack.append(colourcode)
-
+                #they can find bottles now
+                item = bottles
+                randomitem = random.choice(item)
                 entry = 0
+                #userinput
                 userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+                #if they put an invalid input ask them to input again
                 while userinput != 1 and userinput != 2:
                     print("Invalid input!")
                     userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
                 while again == True and userinput == 1 or userinput == 2:
+                    #if they choose to leave
                     if userinput == 1:
                         print("You leave the room noting where it is located")
                         again = False
+                    #if they choose to guess the code
                     elif userinput == 2:
+                        #userinput
                         userinput = input("Enter the code: ")
+                        #if they get it correct they win
                         if userinput == escapecode:
                             end = True
                         else:
+                            #if they dont get it correct lose a life
                             if lives != 0:
                                 lives -= 1
                                 print("Incorrect code! Lost 1 life. You have",lives,"tries left")
                                 userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
-
+                            #if they lose all their lives then they lose
                             if lives == 0:
                                 print("You ran out of tries")
+                                print("The code was",escapecode)
                                 end = True
+            #if they put an invalid input
             else:
                 print("Incorrect code")
-
+        #if they already entered into the room
         elif entry == 0:
             print("You enter the room again")
+            #userinput
             userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+            #if they put an invalid input then ask them to input again
             while userinput != 1 and userinput != 2:
                 print("Invalid input")
                 userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
             while again == False and userinput == 1 or userinput == 2:
+                #if they leave
                 if userinput == 1:
                     print("You leave the room noting where it is located")
                     again = True
+                #if they try to guess the code
                 elif userinput == 2:
                     userinput = input("Enter the code: ")
+                    #if they get the code right they win
                     if userinput == escapecode:
                         end = True
+                    #if they get the code wrong then they lose
                     else:
+                        #if they have more than 0 lives then they continue guessing
                         if lives != 0:
                             lives -= 1
                             print("Incorrect code! Lost 1 life. You have",lives,"tries left")
                             userinput = int(input("Do you want to leave or guess the final code?(1 to leave, 2 to guess:) "))
+                        #if they have 0 lives then they lose
                         if lives == 0:
                             print("You ran out of tries")
+                            print("The code was",escapecode)
                             end = True
+    #if they put an invalid input
     else:
         print("Invalid action")
+#if they have no stamina they lose
 if stamina <= 0:
     print("You ran out of stamina")
+    print("You have finished with",timer,"time and no stamina points")
     print("You get escorted out of the escape room")
     print("You see the escape room fade away as your parents drive you back home")
     print(". . .")
     time.sleep(3)
     print("Thank you for playing")
+#if they run out of time they lose
 elif timer <= 0:
     print("You ran out of time")
+    print("You have finished with no time and",stamina,"stamina points")
     print("You get escorted out of the escape room")
     print("You see the escape room fade away as your parents drive you back home")
     print(". . .")
     time.sleep(3)
     print("Thank you for playing")
+#if they have no lives
 elif lives == 0:
     print("You get escorted out of the escape room")
+    print("You have finished with",timer,"time and",stamina,"stamina points")
     print("You see the escape room fade away as your parents drive you back home")
     print(". . .")
     time.sleep(3)
     print("Thank you for playing")
+elif userinput == "die":
+    print("You get escorted into death")
+#if they win
 else:
     print("You got the correct code!")
+    print("You have finished with",timer,"time and",stamina,"stamina points")
     print("You get escorted out of the escape room as a winner")
     print("You see the escape room fade away as your parents drive you back home")
     print(". . .")
     time.sleep(3)
     print("Thank you for playing")
-
